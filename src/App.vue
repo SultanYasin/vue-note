@@ -30,7 +30,16 @@ const addNote = () => {
     closeModalAfterAddingNote();
   } else return errMsg.value = "Note has to be at least 6 chr ";
 };
+
+function removeNote(id){
+  console.log("removing the specific note you chose")
+// filter returning a new array tha doesn't contain the element with the specified id of the element
+  notes.value = notes.value.filter(note => note.id !== id)
+}
+
 </script>
+
+
 <!-- by doing this -> v-model.trim="newNote" I prevent the user from entering an empty spaces and it will not be counted as a value  -->
 <template>
   <main>
@@ -64,7 +73,7 @@ const addNote = () => {
           <h3 class="title">{{ note.text }}</h3>
           <div class="modify">
             <p class="date">{{ note.date }}</p>
-            <button class="delete">delete</button>
+            <button @click="removeNote(note.id)" class="delete">delete</button>
           </div>
           <!--  <p class="date"> {{currentDateTime}} </p> -->
         </div>
