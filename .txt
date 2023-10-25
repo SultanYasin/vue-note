@@ -1,0 +1,2 @@
+1- I can't add more params more those I defined the function with -> like : function submit(x,y){} in the definition can not be submit(x, y, z) when I use the function.
+ 2- @submit.prevent -> works in the same way as preventDefault in JS 
