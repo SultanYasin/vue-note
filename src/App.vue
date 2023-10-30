@@ -1,25 +1,21 @@
 <template>
-  <div>
-    <h2>app</h2>
-    <input
-      type="text"
-      @input="setUserName($event, 'xx')"
-      @keyup.enter="confInput"
-    />
-    <p>your name is : {{ confName }}</p>
+  <div class="container">
+    <h1>Goals</h1>
+    <div class="input">
+      <input
+        type="text"
+        placeholder="write your goals here to add into the list"
+        v-model="enteredValue"
+      />
+      <button @click="addGoal">add goal</button>
 
-    <form action="" @submit.prevent>
-      <!-- prevent works in same way as preventDefault in JS -->
-      <h2>form</h2>
-      <h3>the value of the counter is : {{ counter }}</h3>
-      <button @click="reduce()">-</button>
-      <button @click="add()">+</button>
-      <input type="text" name="" id="" />
-      <button>submit</button>
-    </form>
-    <!-- by doing this way I make the backgroundColor changeable according to what written in input   -->
-  <input type="text" v-model="bgc" placeholder="colorize the paragraph" >
-  <p class="p" :style="{backgroundColor: bgc}" > style me  </p>
+    </div>
+      <div class="goals">
+        <p v-if="goals.length == 0 " >no goals, add some</p>
+        <p v-else > <ul><li v-for=" (goal, index ) in goals" :key="index" @click="showID" class="li" > {{goal}} - {{index}} - <button @click="removeGoal(index)" >del</button> </li></ul> </p>
+      </div>
+
+   
   </div>
 </template>
 
@@ -27,75 +23,46 @@
 export default {
   data() {
     return {
-      username: "",
-      confName: "",
-      counter: 0,
-      bgc:''
+      enteredValue : "",
+      goals: [],
+
     };
   },
   methods: {
-    subForm() {
-      alert("sub");
+    addGoal() {
+      this.goals.push(this.enteredValue)
+      console.log(this.goals.length)
+      this.enteredValue = "";
     },
-    setUserName(event, param) {
-      this.username = event.target.value + " " + param;
+    removeGoal(ele_index){
+      this.goals.splice(ele_index, 1)
     },
-    confInput() {
-      this.confName = this.username;
-    },
-    reduce() {
-      this.counter = this.counter - 1;
-    },
+ 
 
-    add() {
-      this.counter = this.counter + 1;
-    },
   },
-
-  watch:{
-    counter(value){
-     if (value > 5) {
-      this.counter = 0;
-      console.log("counter can not be grater than 5 ")
-     }
-    }
-  },
-
-  computed: {},
-  
-}
+};
 </script>
 
 <style scoped>
-div {
-  height: 98vh;
+.container {
   display: flex;
   flex-direction: column;
- /*  justify-content: center; */
   align-items: center;
-  background: #000;
-  color: white;
 }
-form {
+.input {
   display: flex;
-  flex-direction: column;
+  margin-bottom: 10px;
 }
-input {
-  height: 5vh;
-}
-button {
-  font-size: large;
-  font-weight: 1000;
-  color: black;
-}
-.p{
-  margin-top: 2%;
-  height: 100px;
-  width: 100px;
-  background-color: #fff;
-  color: #000;
+
+.li{
+  background-color: lightgray;
+  width: 250px;
+  border-radius: 50px;
   text-align: center;
-
 }
-
+li button{
+  margin-left: 20px;
+  width: 40px;
+  border-radius: 20px;
+}
 </style>
